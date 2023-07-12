@@ -1,0 +1,11 @@
+.list {
+  list-style: none;
+  padding: 0;
+}
+
+.list-item {
+  height: 50%;
+}
+.list-item:nth-child(2n) {
+  background-color: slategray;
+}
