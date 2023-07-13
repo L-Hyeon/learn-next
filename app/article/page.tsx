@@ -1,27 +1,37 @@
 import { Article } from "@/util/types";
 import React from "react";
 import styles from "./page.module.css";
-import db from "@/util/db";
+import Button from "./Button";
+import axios from "axios";
 
 type Props = {};
 
 async function page({}: Props) {
-  const articles: Article[] = await (await db).all("select * from article");
-  // console.log(articles);
+  const articles: Article[] = await axios
+    .get("http://localhost:3000/api/article")
+    .then((res) => {
+      console.log(res);
+      if (res.status === 200) {
+        return res.data;
+      } else {
+        return [];
+      }
+    });
 
   return (
     <main>
-      hello there?
+      Article List
       <ul className={styles.list}>
         {articles.map((e: Article) => {
           return (
-            <li className={"styles.list-item"}>
+            <li className={styles.listitem}>
               <span>#{e.id}</span>
               <span>{e.title}</span>
             </li>
           );
         })}
       </ul>
+      <Button />
     </main>
   );
 }
